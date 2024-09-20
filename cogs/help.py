@@ -8,26 +8,37 @@ class HelpCog(commands.Cog):
     @commands.command(name='help')
     async def help_command(self, ctx):
         embed = discord.Embed(title="Help", color=discord.Color.blue())
-        
+
         embed.add_field(
-            name="Quote",
-            value="Use `sam quote @user` to quote a replied message with a profile picture.",
+            name="📥 Download TikTok",
+            value="Usage: `sam dl <url>`\nDownload TikToks without a watermark.",
             inline=False
         )
 
-        embed.add_field(name="\u200b", value="\u200b", inline=False)  # Blank field for spacing
-        
+        # Add a blank field for spacing
+        embed.add_field(name="\u200b", value="\u200b", inline=False)
+
         embed.add_field(
-            name="Albums",
-            value="Use `sam albums` to get the top 3 albums with Spotify links.",
+            name="📝 Quote",
+            value="Usage: `sam quote`\nQuote a replied message with the user's profile picture.",
             inline=False
         )
 
-        embed.add_field(name="\u200b", value="\u200b", inline=False)  # Blank field for spacing
+        # Add a blank field for spacing
+        embed.add_field(name="\u200b", value="\u200b", inline=False)
 
         embed.add_field(
-            name="Reload",
-            value="Use `sam reload <cog_name>` to reload a specified cog (admin only).",
+            name="📊 Weekly Music",
+            value="Usage: `sam weekly albums` or `sam weekly tracks`\nGet the top tracks of the week, optionally by tag.",
+            inline=False
+        )
+
+        # Add a blank field for spacing
+        embed.add_field(name="\u200b", value="\u200b", inline=False)
+
+        embed.add_field(
+            name="🔄 Reload Commands",
+            value="Usage: `sam reload <cog_name>`\nReload a specific cog.",
             inline=False
         )
 

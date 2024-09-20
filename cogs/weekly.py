@@ -10,17 +10,39 @@ class LastFMCog(commands.Cog):
         self.network = pylast.LastFMNetwork(api_key=self.api_key, api_secret=self.api_secret)
 
     @commands.command(name='weekly')
-    async def weekly(self, ctx):
+    async def weekly(self, ctx, category: str):
         try:
-            # Fetch the weekly chart list
-            chart = self.network.get_weekly_chart_list()
+            # Determine which type of data to fetch
+            if category.lower() == 'tracks':
+                top_items = self.network.get_top_tracks(limit=5)
+                title = "📊 Top Tracks of the Week"
+            elif category.lower() == 'artists':
+                top_items = self.network.get_top_artists(limit=5)
+                title = "📊 Top Artists of the Week"
+            else:
+                await ctx.send("Please specify a valid category: `tracks` or `artists`.")
+                return
 
-            # Prepare the response
-            response = "📊 **Weekly Chart List**:\n\n"
-            for track in chart[:10]:  # Get top 10 tracks
-                response += f"🎵 {track.title} by {track.artist}\n"
+            # Create an embed
+            embed = discord.Embed(title=title, color=discord.Color.blue())
 
-            await ctx.send(response)
+            for item in top_items:
+                playcount = item.item.get_playcount()  # Access the playcount for the item
+                if category.lower() == 'tracks':
+                    embed.add_field(
+                        name=f"🎵 {item.item.title}",
+                        value=f"by {item.item.artist.name} | 🎧 {playcount} listens",
+                        inline=False
+                    )
+                elif category.lower() == 'artists':
+                    embed.add_field(
+                        name=f"🎤 {item.item.name}",
+                        value=f"🎧 {playcount} listens",
+                        inline=False
+                    )
+                embed.add_field(name='\u200b', value='\u200b', inline=False)  # Add empty space
+
+            await ctx.send(embed=embed)
 
         except Exception as e:
             await ctx.send(f"An error occurred: {str(e)}")
