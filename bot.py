@@ -21,7 +21,7 @@ async def load_cogs():
 async def main():
     await load_cogs()
     # Replace 'YOUR_DISCORD_BOT_TOKEN' with your bot's token
-    await bot.start('ODgwNzExODEwMDc5MTMzNzA2.G9Foj6.MzidtGeuZsTNm3QUFkFnbEJLJ8mmsAHn41gWfA')
+    await bot.start('YOUR_DISCORD_BOT_TOKEN')
 
 # Run the main function to start the bot
 if __name__ == '__main__':
